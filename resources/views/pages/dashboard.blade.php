@@ -1,10 +1,8 @@
 @extends('entete.entete')
 @Section('content')
-     <!-- Add padding to account for fixed header -->
-    <div class="pt-16">
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 ml-64">
+    <main class="">
         <div class="max-w-7xl mx-auto">
             <!-- Welcome Section -->
             <div class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl shadow-sm border border-gray-200 p-6 mb-8 relative overflow-hidden">

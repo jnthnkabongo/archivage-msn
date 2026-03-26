@@ -8,6 +8,8 @@ Route::get('/', [indexController::class, 'index']);
 Route::get('/dashboard', [indexController::class, 'dashboard'])->name('dashboard');
 Route::get('/archives', [indexController::class, 'liste_archives'])->name('liste-archives');
 Route::get('/documents', [indexController::class, 'liste_documents'])->name('liste-documents');
+Route::get('/documents/{document}/view', [indexController::class, 'view_document'])->name('view.document');
+Route::post('/documents-save', [indexController::class, 'enregistrer_fichier'])->name('enregistrer.document');
 Route::get('/utilisateurs', [indexController::class, 'liste_utilisateurs'])->name('liste-utilisateurs');
 Route::get('/services', [indexController::class, 'liste_services'])->name('liste-services');
 Route::get('/roles', [indexController::class, 'liste_roles'])->name('liste-roles');
