@@ -6,4 +6,12 @@ use App\Http\Controllers\indexController;
 
 Route::get('/', [indexController::class, 'index']);
 Route::get('/dashboard', [indexController::class, 'dashboard'])->name('dashboard');
+Route::get('/archives', [indexController::class, 'liste_archives'])->name('liste-archives');
+Route::get('/documents', [indexController::class, 'liste_documents'])->name('liste-documents');
 Route::get('/utilisateurs', [indexController::class, 'liste_utilisateurs'])->name('liste-utilisateurs');
+Route::get('/services', [indexController::class, 'liste_services'])->name('liste-services');
+Route::get('/roles', [indexController::class, 'liste_roles'])->name('liste-roles');
+Route::get('/categories', [indexController::class, 'liste_categories'])->name('liste-categories');
+Route::get('/parametres', [indexController::class, 'parametres'])->name('parametres');
+Route::get('/statistiques', [indexController::class, 'statistiques'])->name('statistiques');
+Route::get('/historique', [indexController::class, 'historique'])->name('historique');

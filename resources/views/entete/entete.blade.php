@@ -82,14 +82,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                        <a href="{{ route('liste-archives') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
                             <i class="fas fa-folder text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
                             <span class="font-medium">Archives</span>
                             <span class="ml-auto bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">12</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                        <a href="{{ route('liste-documents')}}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
                             <i class="fas fa-file-alt text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
                             <span class="font-medium">Documents</span>
                             <span class="ml-auto bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">156</span>
@@ -101,6 +101,24 @@
                             <span class="font-medium">Utilisateurs</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('liste-services') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                            <i class="fas fa-tools text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
+                            <span class="font-medium">Services</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('liste-roles') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                            <i class="fas fa-user-shield text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
+                            <span class="font-medium">Rôles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('liste-categories') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                            <i class="fas fa-tags text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
+                            <span class="font-medium">Catégories</span>
+                        </a>
+                    </li>
                 </ul>
                 
                 <div class="mb-6 mt-8">
@@ -108,21 +126,21 @@
                 </div>
                 <ul class="space-y-2">
                     <li>
-                        <a href="#" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                        <a href="{{ route('parametres') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
                             <i class="fas fa-cog text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
                             <span class="font-medium">Paramètres</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                        <a href="{{ route('statistiques') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
                             <i class="fas fa-chart-bar text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
                             <span class="font-medium">Statistiques</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
-                            <i class="fas fa-shield-alt text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
-                            <span class="font-medium">Sécurité</span>
+                        <a href="{{ route('historique') }}" class="flex items-center p-3 text-gray-700 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 group">
+                            <i class="fas fa-history text-gray-500 mr-3 group-hover:text-gray-700 transition-colors"></i>
+                            <span class="font-medium">Historique</span>
                         </a>
                     </li>
                 </ul>
