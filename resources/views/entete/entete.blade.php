@@ -147,13 +147,13 @@
             </div>
         </aside>
 
-    <div class="">
-        @yield('content')
+        <div class="flex-1 p-8 ml-64">
+            @yield('content')
+        </div>
+
     </div>
 
-     </div>
-
-<script>
+    <script>
         // Toggle user dropdown
         function toggleUserDropdown() {
             const dropdown = document.getElementById('userDropdown');

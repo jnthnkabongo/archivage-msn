@@ -4,7 +4,7 @@
     <div class="pt-16">
     
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 ml-64">
+    <main class="">
         <div class="max-w-7xl mx-auto">
             <!-- Header Section -->
             <div class="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8 relative overflow-hidden">
@@ -59,7 +59,7 @@
             </div>
 
             <!-- Users Table -->
-            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -328,3 +328,5 @@
             });
         }
     </script>
+@endsection
+

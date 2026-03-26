@@ -16,6 +16,8 @@ class Document extends Model
         'description',
         'fichier',
         'type',
+        'type_fichier',
+        'mime_type',
         'date_document',
         'categorie_id',
         'user_id',

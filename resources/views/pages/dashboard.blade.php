@@ -1,5 +1,7 @@
 @extends('entete.entete')
 @Section('content')
+     <!-- Add padding to account for fixed header -->
+    <div class="pt-16">
 
     <!-- Main Content Area -->
     <main class="flex-1 p-8 ml-64">
@@ -182,4 +184,5 @@
             </div>
         </div>
     </main>
+@endsection
    

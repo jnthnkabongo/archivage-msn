@@ -15,6 +15,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('fichier');
             $table->enum('type', ['entrant', 'sortant', 'interne']);
+            $table->enum('type_fichier', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'png', 'jpg'])->nullable();
+            $table->string('mime_type', 100)->nullable(); 
             $table->date('date_document')->nullable();
             $table->foreignId('categorie_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');

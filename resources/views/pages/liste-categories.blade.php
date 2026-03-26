@@ -2,7 +2,7 @@
 @section('content')
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 ml-64">
+    <main class="">
         <div class="max-w-7xl mx-auto">
             <!-- Header Section -->
             <div class="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8 relative overflow-hidden">
@@ -50,115 +50,236 @@
                 </div>
             </div>
 
-            <!-- Categories Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8" id="categoriesGrid">
-                <!-- Exemple de cartes de catégories -->
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 opacity-10 rounded-full -mr-10 -mt-10 group-hover:opacity-20 transition-opacity"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-3 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl shadow-inner">
-                                <i class="fas fa-folder text-blue-600 text-xl"></i>
-                            </div>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Administratif</h3>
-                        <p class="text-sm text-gray-600 mb-4">Documents administratifs et légaux</p>
-                        <div class="flex items-center justify-between text-xs text-gray-500">
-                            <span><i class="fas fa-file mr-1"></i> 45 documents</span>
-                            <span><i class="fas fa-archive mr-1"></i> 3 archives</span>
-                        </div>
-                        <div class="mt-4 flex items-center space-x-2">
-                            <button class="flex-1 text-blue-600 hover:text-blue-800 transition-colors text-sm">
-                                <i class="fas fa-edit mr-1"></i>
-                                Modifier
-                            </button>
-                            <button class="text-red-600 hover:text-red-800 transition-colors text-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 opacity-10 rounded-full -mr-10 -mt-10 group-hover:opacity-20 transition-opacity"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-3 bg-gradient-to-br from-green-100 to-green-200 rounded-xl shadow-inner">
-                                <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
-                            </div>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Finance</h3>
-                        <p class="text-sm text-gray-600 mb-4">Documents financiers et comptables</p>
-                        <div class="flex items-center justify-between text-xs text-gray-500">
-                            <span><i class="fas fa-file mr-1"></i> 78 documents</span>
-                            <span><i class="fas fa-archive mr-1"></i> 5 archives</span>
-                        </div>
-                        <div class="mt-4 flex items-center space-x-2">
-                            <button class="flex-1 text-blue-600 hover:text-blue-800 transition-colors text-sm">
-                                <i class="fas fa-edit mr-1"></i>
-                                Modifier
-                            </button>
-                            <button class="text-red-600 hover:text-red-800 transition-colors text-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-600 opacity-10 rounded-full -mr-10 -mt-10 group-hover:opacity-20 transition-opacity"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-3 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl shadow-inner">
-                                <i class="fas fa-bullhorn text-purple-600 text-xl"></i>
-                            </div>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Marketing</h3>
-                        <p class="text-sm text-gray-600 mb-4">Documents marketing et publicitaires</p>
-                        <div class="flex items-center justify-between text-xs text-gray-500">
-                            <span><i class="fas fa-file mr-1"></i> 23 documents</span>
-                            <span><i class="fas fa-archive mr-1"></i> 2 archives</span>
-                        </div>
-                        <div class="mt-4 flex items-center space-x-2">
-                            <button class="flex-1 text-blue-600 hover:text-blue-800 transition-colors text-sm">
-                                <i class="fas fa-edit mr-1"></i>
-                                Modifier
-                            </button>
-                            <button class="text-red-600 hover:text-red-800 transition-colors text-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 opacity-10 rounded-full -mr-10 -mt-10 group-hover:opacity-20 transition-opacity"></div>
-                    <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="p-3 bg-gradient-to-br from-red-100 to-red-200 rounded-xl shadow-inner">
-                                <i class="fas fa-users text-red-600 text-xl"></i>
-                            </div>
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Inactif</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Ressources Humaines</h3>
-                        <p class="text-sm text-gray-600 mb-4">Documents RH et personnel</p>
-                        <div class="flex items-center justify-between text-xs text-gray-500">
-                            <span><i class="fas fa-file mr-1"></i> 12 documents</span>
-                            <span><i class="fas fa-archive mr-1"></i> 1 archive</span>
-                        </div>
-                        <div class="mt-4 flex items-center space-x-2">
-                            <button class="flex-1 text-blue-600 hover:text-blue-800 transition-colors text-sm">
-                                <i class="fas fa-edit mr-1"></i>
-                                Modifier
-                            </button>
-                            <button class="text-red-600 hover:text-red-800 transition-colors text-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
+            <!-- Categories Table -->
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox" id="selectAllCategories" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500" onchange="toggleAllCategories()">
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documents</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Archives</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50 transition-colors category-item">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-orange-100 rounded-lg mr-3">
+                                            <i class="fas fa-folder text-orange-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Administratif</div>
+                                            <div class="text-xs text-gray-500">ID: #001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Documents administratifs et légaux</div>
+                                    <div class="text-xs text-gray-500">Contrats, factures, rapports</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">245 documents</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">89 archives</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Actif</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewCategory('Administratif')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editCategory('Administratif')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCategory('Administratif')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-colors category-item">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-blue-100 rounded-lg mr-3">
+                                            <i class="fas fa-file-medical text-blue-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Médical</div>
+                                            <div class="text-xs text-gray-500">ID: #002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Dossiers médicaux et de santé</div>
+                                    <div class="text-xs text-gray-500">Patients, traitements, analyses</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">189 documents</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">156 archives</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Actif</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewCategory('Médical')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editCategory('Médical')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCategory('Médical')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-colors category-item">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-green-100 rounded-lg mr-3">
+                                            <i class="fas fa-chart-line text-green-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Finance</div>
+                                            <div class="text-xs text-gray-500">ID: #003</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Rapports financiers et budgétaires</div>
+                                    <div class="text-xs text-gray-500">Budgets, comptes, bilans</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">312 documents</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">234 archives</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Actif</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewCategory('Finance')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editCategory('Finance')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCategory('Finance')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-colors category-item">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-purple-100 rounded-lg mr-3">
+                                            <i class="fas fa-graduation-cap text-purple-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Éducation</div>
+                                            <div class="text-xs text-gray-500">ID: #004</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Documents pédagogiques et éducatifs</div>
+                                    <div class="text-xs text-gray-500">Cours, programmes, évaluations</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">156 documents</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">98 archives</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Actif</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewCategory('Éducation')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editCategory('Éducation')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCategory('Éducation')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-colors category-item">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="p-2 bg-red-100 rounded-lg mr-3">
+                                            <i class="fas fa-users text-red-600 text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900">Ressources Humaines</div>
+                                            <div class="text-xs text-gray-500">ID: #005</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900">Gestion du personnel et RH</div>
+                                    <div class="text-xs text-gray-500">Contrats, évaluations, formations</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">98 documents</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">67 archives</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded-full">Inactif</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewCategory('Ressources Humaines')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="editCategory('Ressources Humaines')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="deleteCategory('Ressources Humaines')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

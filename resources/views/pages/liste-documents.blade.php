@@ -2,7 +2,7 @@
 @section('content')
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-8 ml-64">
+    <main class="">
         <div class="max-w-7xl mx-auto">
             <!-- Header Section -->
             <div class="bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8 relative overflow-hidden">
@@ -45,8 +45,12 @@
                             <option value="">Tous les types</option>
                             <option value="pdf">PDF</option>
                             <option value="doc">Word</option>
+                            <option value="docx">Word</option>
                             <option value="xls">Excel</option>
-                            <option value="img">Image</option>
+                            <option value="xlsx">Excel</option>
+                            <option value="png">PNG</option>
+                            <option value="jpg">JPG</option>
+                            <option value="jpeg">JPEG</option>
                         </select>
                         <select id="statusFilter" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent" onchange="filterDocuments()">
                             <option value="">Tous les statuts</option>
@@ -59,7 +63,7 @@
             </div>
 
             <!-- Documents Table -->
-            <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -239,6 +243,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Fichier</label>
                     <input type="file" name="file" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <p class="text-xs text-gray-500 mt-1">Formats acceptés: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG</p>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
