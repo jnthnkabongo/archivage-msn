@@ -24,7 +24,7 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <img src="{{ asset('images/mns-logo.jpeg') }}" alt="MNS" class="h-8 w-auto object-contain">
-                    <span class="ml-3 text-xl font-semibold text-gray-800">MNS Archive</span>
+                    <span class="ml-3 text-xl font-semibold text-gray-800">MECANISME NATIONALE DE SUIVI</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <button class="text-gray-500 hover:text-gray-700 transition-colors relative group">
@@ -35,6 +35,7 @@
                         <button onclick="toggleUserDropdown()" class="flex items-center text-sm text-gray-700 hover:text-gray-900 transition-colors">
                             <i class="fas fa-user-circle text-xl mr-2"></i>
                             {{ auth()->user()->name ?? 'Utilisateur' }}
+                            {{ auth()->user()->role->nom ?? 'Utilisateur' }}
                             <i class="fas fa-chevron-down ml-2 text-xs transition-transform" id="userDropdownIcon"></i>
                         </button>
                         <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
@@ -48,7 +49,7 @@
                                     Paramètres
                                 </a>
                                 <hr class="my-1 border-gray-200">
-                                <form method="POST" action="" class="block">
+                                <form method="POST" action="{{ route('logout') }}" class="block">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-700 transition-colors">
                                         <i class="fas fa-sign-out-alt mr-2"></i>

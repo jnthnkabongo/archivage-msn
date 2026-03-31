@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\Role;
 use App\Models\Service;
+use App\Models\SousCategorie;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -18,15 +21,25 @@ class indexController extends Controller
      */
     public function index()
     {
-        return view('login');
     }
 
     public function dashboard(){
-        return view('pages.dashboard');
+        $user = Auth::user();
+        if(!$user){
+            return redirect()->route('login');
+        }
+        $compteurDocuments = Document::count();
+        $compteurServices = Service::count();
+        $compteurCategories = Category::count();
+        $compteurUtilisateurs = User::count();
+        return view('pages.dashboard', compact('user', 'compteurDocuments', 'compteurServices', 'compteurCategories', 'compteurUtilisateurs'));
     }
 
     public function liste_utilisateurs(){
-        return view('pages.liste-utilisateurs');
+        $roles = Role::orderBy('nom', 'asc')->get();
+        $services = Service::orderBy('nom', 'asc')->get();
+        $utilisateurs = User::orderBy('name', 'asc')->paginate('10');
+        return view('pages.liste-utilisateurs', compact('utilisateurs', 'roles', 'services'));
     }
     
     public function liste_archives(){
@@ -49,8 +62,55 @@ class indexController extends Controller
         return view('pages.liste-roles');
     }
 
+        public function get_sous_categories($categorie_id){
+            $sousCategories = SousCategorie::where('categorie_id', $categorie_id)->get();
+        return response()->json($sousCategories);
+    }
+
+    public function view_document(Document $document){
+        return view('pages.view-document', compact('document'));
+    }
+
+    public function create_category(Request $request){
+        //1. Validation
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+        
+        //2. Création de la catégorie
+        $category = Category::create([
+            'nom' => $request->nom,
+            'description' => $request->description,
+        ]);
+        
+        return redirect()->route('liste-categories')->with('success', 'Catégorie créée avec succès');
+    }
+    
+    public function create_sous_category(Request $request){
+        //1. Validation
+        $request->validate([
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'categorie_id' => 'required|exists:categories,id',
+        ]);
+        
+        //2. Création de la sous-catégorie
+        $sousCategory = SousCategorie::create([
+            'nom' => $request->nom,
+            'description' => $request->description,
+            'categorie_id' => $request->categorie_id,
+        ]);
+        
+        return redirect()->route('liste-categories')->with('success', 'Sous-catégorie créée avec succès');
+    }
+
     public function liste_categories(){
-        return view('pages.liste-categories');
+
+        $sousCategories = SousCategorie::all();
+        $categories = Category::orderBy('nom', 'asc')->get();
+        $listeCategories = SousCategorie::with('categorie')->paginate(10);
+        return view('pages.liste-categories', compact('sousCategories', 'categories', 'listeCategories'));
     }
 
     public function parametres(){
@@ -66,7 +126,7 @@ class indexController extends Controller
     }
 
     public function enregistrer_fichier(Request $request){
-    
+        //dd($request->all());
         // 1. VALIDATION
         $request->validate([
             'titre' => 'required|string|max:255',
@@ -74,9 +134,10 @@ class indexController extends Controller
             'fichier' => 'required|file|mimes:pdf,doc,docx,xlsx,png,jpg,jpeg|max:5120',
             'description' => 'nullable|string|max:1000',
             'type' => 'required|in:entrant,sortant,interne',
-            'statut' => 'required|in:draft,validated,archived',
+            //'statut' => 'required|in:draft,validated,archived',
             'date_document' => 'nullable|date',
             'categorie_id' => 'nullable|exists:categories,id',
+            'sous_categorie_id' => 'nullable|exists:sous_categories,id',
             'service_id' => 'nullable|exists:services,id',
             'niveau_confidentialite' => 'nullable|in:public,interne,confidentiel,secret',
             'tags' => 'nullable|array',
@@ -108,6 +169,7 @@ class indexController extends Controller
             'mime_type' => $mime,
             'date_document' => $request->date_document ?? now()->format('Y-m-d'),
             'categorie_id' => $request->categorie_id,
+            'sous_categorie_id' => $request->sous_categorie_id,
             'service_id' => $request->service_id,
             'user_id' => Auth::id(),
             'statut' => 'actif',

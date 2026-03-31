@@ -328,32 +328,38 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Service</label>
+                        <select name="service_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                            <option value="">Sélectionner un service</option>
+                                @foreach($services as $service)
+                                    <option value="{{ $service->id }}">{{ ucfirst($service->nom) }}</option>
+                                @endforeach
+                          
+                        </select>
+                    </div>
+
+                    <!-- Ligne 4 -->
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
-                        <select name="categorie_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                        <select name="categorie_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent" onchange="loadSousCategories(this.value)">
                             <option value="">Sélectionner une catégorie</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->nom }}</option>
+                                    <option value="{{ $category->id }}">{{ ucfirst($category->nom) }}</option>
                                 @endforeach
                             
                         </select>
                     </div>
                     
-                    <!-- Ligne 4 -->
+                
+                   
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Service</label>
-                        <select name="service_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
-                            <option value="">Sélectionner un service</option>
-                                @foreach($services as $service)
-                                    <option value="{{ $service->id }}">{{ $service->nom }}</option>
-                                @endforeach
-                          
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Sous-catégorie</label>
+                        <select id="sousCategorieSelect" name="sous_categorie_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                            <option value="">Sélectionner une sous-catégorie</option>
+                            
                         </select>
                     </div>
-                    {{-- <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Date du document</label>
-                        <input type="date" name="date_document" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
-                    </div> --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Niveau de confidentialité</label>
                         <select name="niveau_confidentialite" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
@@ -362,20 +368,6 @@
                             <option value="confidentiel">Confidentiel</option>
                             <option value="secret">Secret</option>
                         </select>
-                    </div>
-                    
-                    <!-- Ligne 5 -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Statut *</label>
-                        <select name="statut" required class="w-full px-3 py-2 border @error('statut') border-red-500 @enderror border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
-                            <option value="">Sélectionner un statut</option>
-                            <option value="draft">Brouillon</option>
-                            <option value="validated">Validé</option>
-                            <option value="archived">Archivé</option>
-                        </select>
-                        @error('statut')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
                     
                     <!-- Ligne 6 -->
@@ -418,6 +410,25 @@
         // Perform manual search
         function performSearch() {
             filterDocuments();
+        }
+
+        // Load sous-categories dynamically
+        function loadSousCategories(categorieId) {
+            if (!categorieId) {
+                document.getElementById('sousCategorieSelect').innerHTML = '<option value="">Sélectionner une sous-catégorie</option>';
+                return;
+            }
+
+            fetch(`/sous-categories/${categorieId}`)
+                .then(response => response.json())
+                .then(data => {
+                    let options = '<option value="">Sélectionner une sous-catégorie</option>';
+                    data.forEach(sousCat => {
+                        options += `<option value="${sousCat.id}">${sousCat.nom.charAt(0).toUpperCase() + sousCat.nom.slice(1)}</option>`;
+                    });
+                    document.getElementById('sousCategorieSelect').innerHTML = options;
+                })
+                .catch(error => console.error('Error loading sous-categories:', error));
         }
 
         // Filter documents

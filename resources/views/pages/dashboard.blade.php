@@ -9,7 +9,7 @@
                 <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 opacity-10 rounded-full -mr-16 -mt-16"></div>
                 <div class="relative z-10">
                     <h1 class="text-3xl font-bold text-gray-800 mb-2">Bonjour, {{ auth()->user()->name ?? 'Utilisateur' }}</h1>
-                    <p class="text-gray-600 mb-4">Bienvenue dans votre système d'archivage MNS</p>
+                    <p class="text-gray-600 mb-4">Bienvenue dans notre système d'archivage.</p>
                     <div class="flex items-center space-x-4">
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-clock mr-2"></i>
@@ -33,8 +33,8 @@
                                 <i class="fas fa-folder text-blue-600 text-2xl"></i>
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm text-gray-600 font-medium">Total Archives</p>
-                                <p class="text-3xl font-bold text-gray-800">1,234</p>
+                                <p class="text-sm text-gray-600 font-medium">Total catégories</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $compteurCategories }}</p>
                             </div>
                         </div>
                         <div class="text-3xl text-gray-400 group-hover:text-gray-600 transition-colors">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="mt-4 text-center">
                         <div class="inline-flex items-center text-xs text-gray-500">
-                            <i class="fas fa-info-circle mr-1"></i>
+                            <i class="fas fa-chart-line mr-1"></i>
                             <span>+12% ce mois</span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm text-gray-600 font-medium">Documents</p>
-                                <p class="text-3xl font-bold text-gray-800">5,678</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $compteurDocuments }}</p>
                             </div>
                         </div>
                         <div class="text-3xl text-gray-400 group-hover:text-gray-600 transition-colors">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="mt-4 text-center">
                         <div class="inline-flex items-center text-xs text-gray-500">
-                            <i class="fas fa-info-circle mr-1"></i>
+                            <i class="fas fa-chart-line mr-1"></i>
                             <span>+8% ce mois</span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                             </div>
                             <div class="ml-4">
                                 <p class="text-sm text-gray-600 font-medium">Utilisateurs</p>
-                                <p class="text-3xl font-bold text-gray-800">42</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $compteurUtilisateurs }}</p>
                             </div>
                         </div>
                         <div class="text-3xl text-gray-400 group-hover:text-gray-600 transition-colors">
@@ -89,8 +89,8 @@
                     </div>
                     <div class="mt-4 text-center">
                         <div class="inline-flex items-center text-xs text-gray-500">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            <span>+3 nouveaux</span>
+                            <i class="fas fa-users mr-1"></i>
+                            <span>+1 nouveaux</span>
                         </div>
                     </div>
                 </div>
@@ -99,15 +99,15 @@
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center">
                             <div class="p-4 bg-gradient-to-br from-red-100 to-red-200 rounded-xl shadow-inner">
-                                <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                                <i class="fas fa-building text-red-600 text-2xl"></i>
                             </div>
                             <div class="ml-4">
-                                <p class="text-sm text-gray-600 font-medium">Sécurisé</p>
-                                <p class="text-3xl font-bold text-gray-800">100%</p>
+                                <p class="text-sm text-gray-600 font-medium">Service</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $compteurServices }}</p>
                             </div>
                         </div>
                         <div class="text-3xl text-gray-400 group-hover:text-gray-600 transition-colors">
-                            <i class="fas fa-check-circle"></i>
+                            <i class="fas fa-building"></i>
                         </div>
                     </div>
                     <div class="mt-4 text-center">

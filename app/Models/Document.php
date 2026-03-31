@@ -20,6 +20,7 @@ class Document extends Model
         'mime_type',
         'date_document',
         'categorie_id',
+        'sous_categorie_id',
         'user_id',
         'service_id',
         'statut',
@@ -38,6 +39,11 @@ class Document extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'categorie_id');
+    }
+
+    public function sousCategory()
+    {
+        return $this->belongsTo(SousCategorie::class, 'sous_categorie_id');
     }
 
     public function user()

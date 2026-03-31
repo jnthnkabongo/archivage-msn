@@ -20,9 +20,8 @@
                 alt="Mécanisme National de Suivi" 
                 class="w-auto h-auto object-contain" style="max-width: 900px; max-height: 600px;"
             >
-
-            <h1 class="text-3xl font-bold text-gray-800 mb-2 mt-4">MNS Archive</h1>
-            <p class="text-gray-600 text-sm">Mécanisme National de Suivi</p>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2 mt-4 text-center">MECANISME NATIONAL DE SUIVI DE L'ACCORD-CADRE D'ADDIS-ABEBA</h1>
+            {{-- <p class="text-gray-600 text-sm text-center">Mécanisme National de Suivi</p> --}}
         </div>
 
         <!-- Right side - Login Form -->
@@ -32,8 +31,8 @@
                 <!-- Login Form Container -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
                     <div class="mb-1">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-2">Connexion</h2>
-                        <p class="text-gray-600">Accédez à votre système d'archivage</p>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">Connexion</h2>
+                        <p class="text-gray-600 text-center">Accédez à votre système d'archivage</p>
                     </div>
                 @if ($errors->any())
                     <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
@@ -51,7 +50,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="" class="space-y-4">
+                <form method="POST" action="{{ route('soimission_login')}}" class="space-y-4">
                     @csrf
                     
                     <!-- Email field -->
