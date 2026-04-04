@@ -1,4 +1,4 @@
-@extends('entete.entete')
+@extends('entete-user.entete')
 @section('content')
 
     <!-- Main Content Area -->
@@ -21,10 +21,6 @@
                             <button onclick="showAddSousCategoryModal()" class="flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors transform hover:scale-105">
                                 <i class="fas fa-plus mr-2"></i>
                                 Ajouter une sous-catégorie
-                            </button>
-                            <button class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
                             </button>
                         </div>
                     </div>
@@ -60,52 +56,44 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <input type="checkbox" id="selectAllCategories" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500" onchange="toggleAllCategories()">
-                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sous-catégorie</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Archives</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse($listeCategories as $key => $categorie)
                                 <tr class="hover:bg-gray-50 transition-colors category-item">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 category-checkbox">
+                                    <td class="px-2 py-2 whitespace-nowrap text-center text-xs font-medium text-gray-600">
+                                        {{ ($listeCategories->currentPage() - 1) * $listeCategories->perPage() + $key + 1 }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                                    <td class="px-2 py-2 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="p-2 bg-orange-100 rounded-lg mr-3">
                                                 <i class="fas fa-folder text-orange-600 text-lg"></i>
                                             </div>
                                             <div>
                                                 <div class="text-sm font-medium text-gray-900">{{ ucfirst($categorie->categorie->nom) }}</div>
-                                                <div class="text-xs text-gray-500">ID: {{ $categorie->id }}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ ucfirst($categorie->nom) }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ ucfirst($categorie->description) }} documents</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">89 archives</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <td class="px-2 py-2 whitespace-nowrap"> 
                                         <div class="flex items-center space-x-2">
-                                            <button onclick="viewCategory('Administratif')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                            {{ ucfirst($categorie->nom) }}
+                                        </div>
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap">
+                                        <div class="text-sm text-gray-900">{{ ucfirst($categorie->description) }} </div>
+                                    </td>
+                                    <td class="px-2 py-2 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex items-center space-x-2">
+                                            <button onclick="viewCategory('Administratif')" class="p-1.5 text-indigo-600 bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-700 rounded-lg transition-all duration-200 group" title="Voir">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button onclick="editCategory('Administratif')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                            <button onclick="editCategory('Administratif')" class="p-1.5 text-gray-600 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 rounded-lg transition-all duration-200 group" title="Modifier">
                                                 <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button onclick="deleteCategory('Administratif')" class="text-red-600 hover:text-red-900" title="Supprimer">
-                                                <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -122,23 +110,16 @@
                 </div>
             </div>
 
-            <!-- Pagination -->
+             <!-- Pagination -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-700">
-                        Affichage de 1 à 4 sur 8 catégories
-                    </div>
+                    <div class="text-sm text-gray-700"></div>
                     <div class="flex items-center space-x-2">
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-left"></i>
-                            Précédent
-                        </button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">1</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">2</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">Suivant</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
+                        
+                        @if($listeCategories->hasPages())
+
+                            {{ $listeCategories->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -154,7 +135,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form method="POST" action="{{ route('create-category') }}" class="space-y-4">
+            <form method="POST" action="{{ route('create-category-user') }}" class="space-y-4">
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nom de la catégorie</label>
@@ -185,7 +166,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form method="POST" action="{{ route('create-sous-category') }}" class="space-y-4">
+            <form method="POST" action="{{ route('create-sous-category-user') }}" class="space-y-4">
                 @csrf
 
                 <div>

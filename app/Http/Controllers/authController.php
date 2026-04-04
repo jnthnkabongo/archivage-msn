@@ -30,7 +30,12 @@ class authController extends Controller
     public function soimission_login(Credentials $request){
         $credentials = $request->validated();
         if(Auth::attempt($credentials)){
-            return redirect()->route('dashboard')->with('success', 'Connexion réussie');
+            if (Auth::user()->role_id == 1) {
+                return redirect()->route('dashboard')->with('success', 'Connexion réussie');
+            }elseif (Auth::user()->role_id == 2) {
+                return redirect()->route('dashboard-user')->with('success', 'Connexion réussie');
+            }
+            return redirect()->route('login')->with('success', 'Connexion réussie');
         }
         return redirect()->back()->with('error', 'Identifiants invalides');
     }

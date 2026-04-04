@@ -18,10 +18,6 @@
                                 <i class="fas fa-plus mr-2"></i>
                                 Ajouter un service
                             </button>
-                            <button class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -50,15 +46,13 @@
                 </div>
             </div>
 
-            <!-- Services Table -->
+          <!-- Services Table -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <input type="checkbox" id="selectAll" class="rounded border-gray-300" onchange="toggleSelectAll()">
-                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Responsable</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employés</th>
@@ -69,44 +63,55 @@
                         </thead>
                         <tbody id="servicesTableBody" class="bg-white divide-y divide-gray-200">
                             <!-- Exemple de lignes de services -->
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="rounded border-gray-300" value="1">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="p-2 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg">
-                                                <i class="fas fa-building text-blue-600"></i>
-                                            </div>
-                                        </div>
+                            @forelse($listeServices as $key => $service)
+                                <tr class="hover:bg-gray-50 transition-colors">
+
+                                    <td class="px-4 py-2 whitespace-nowrap text-center text-xs font-medium text-gray-600">
+                                        {{ ($listeServices->currentPage() - 1) * $listeServices->perPage() + $key + 1 }}
+                                    </td>
+                                    <td>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">Direction Générale</div>
-                                            <div class="text-xs text-gray-500">ID: #001</div>
+                                            <div class="text-sm font-medium text-gray-900">{{ $service->nom }}</div>
+                                            <div class="text-xs text-gray-500">ID: #{{ $service->id }}</div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Jean Dupont</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">5</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">dg@mns.cd</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center space-x-2">
-                                        <button class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button class="text-gray-600 hover:text-gray-800 transition-colors">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-800 transition-colors">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $service->description }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">{{ $service->users->count() }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                                        @if($service->users->count() > 0)
+                                            {{ $service->users->first()->email }}
+                                            @if($service->users->count() > 1)
+                                                <span class="text-xs text-gray-500">(+{{ $service->users->count() - 1 }})</span>
+                                            @endif
+                                        @else
+                                            <span class="text-gray-400">Aucun</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Actif</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <div class="flex items-center space-x-2">
+                                            <button class="text-blue-600 hover:text-blue-800 transition-colors">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="text-gray-600 hover:text-gray-800 transition-colors">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-800 transition-colors">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">
+                                        Aucun service trouvé
+                                    </td>
+                                </tr>
+                            @endforelse
+                            {{-- <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <input type="checkbox" class="rounded border-gray-300" value="2">
                                 </td>
@@ -216,7 +221,7 @@
                                         </button>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -225,20 +230,13 @@
             <!-- Pagination -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-700">
-                        Affichage de 1 à 4 sur 6 services
-                    </div>
+                    <div class="text-sm text-gray-700"></div>
                     <div class="flex items-center space-x-2">
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-left"></i>
-                            Précédent
-                        </button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">1</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">2</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">Suivant</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
+                        
+                        @if($listeServices->hasPages())
+
+                            {{ $listeServices->links() }}
+                        @endif
                     </div>
                 </div>
             </div>

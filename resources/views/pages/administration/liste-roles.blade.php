@@ -18,10 +18,6 @@
                                 <i class="fas fa-plus mr-2"></i>
                                 Ajouter un rôle
                             </button>
-                            <button class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -60,63 +56,58 @@
                                     <input type="checkbox" id="selectAllRoles" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500" onchange="toggleAllRoles()">
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rôle</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Permissions</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateurs</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-50 transition-colors role-item">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 role-checkbox">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="p-2 bg-indigo-100 rounded-lg mr-3">
-                                            <i class="fas fa-user-shield text-indigo-600 text-lg"></i>
+                            @forelse($listeRoles as $role)
+                                <tr class="hover:bg-gray-50 transition-colors role-item">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 role-checkbox">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="p-2 bg-indigo-100 rounded-lg mr-3">
+                                                <i class="fas fa-user-shield text-indigo-600 text-lg"></i>
+                                            </div>
+                                            <div>
+                                                <div class="text-sm font-medium text-gray-900">{{ $role->nom }}</div>
+                                                <div class="text-xs text-gray-500">{{ $role->id }}</div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">Administrateur</div>
-                                            <div class="text-xs text-gray-500">ID: #001</div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex flex-wrap gap-1">
+                                            <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Créer</span>
+                                            <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Lire</span>
+                                            <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Modifier</span>
+                                            <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Supprimer</span>
+                                            <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Export</span>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-900">Accès complet au système</div>
-                                    <div class="text-xs text-gray-500">Gestion de tous les modules</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex flex-wrap gap-1">
-                                        <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Créer</span>
-                                        <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Lire</span>
-                                        <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Modifier</span>
-                                        <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Supprimer</span>
-                                        <span class="px-2 py-1 text-xs bg-indigo-100 text-indigo-800 rounded-full">Export</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">3 utilisateurs</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">Actif</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <div class="flex items-center space-x-2">
-                                        <button onclick="viewRole('Administrateur')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                        <button onclick="editRole('Administrateur')" class="text-blue-600 hover:text-blue-900" title="Modifier">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button onclick="deleteRole('Administrateur')" class="text-red-600 hover:text-red-900" title="Supprimer">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 transition-colors role-item">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div class="flex items-center space-x-2">
+                                            <button onclick="viewRole('Administrateur')" class="text-indigo-600 hover:text-indigo-900" title="Voir">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button onclick="editRole('Administrateur')" class="text-blue-600 hover:text-blue-900" title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button onclick="deleteRole('Administrateur')" class="text-red-600 hover:text-red-900" title="Supprimer">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                        Aucun rôle trouvé
+                                    </td>
+                                </tr>
+                            @endforelse
+                            {{-- <tr class="hover:bg-gray-50 transition-colors role-item">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <input type="checkbox" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500 role-checkbox">
                                 </td>
@@ -253,7 +244,7 @@
                                         </button>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

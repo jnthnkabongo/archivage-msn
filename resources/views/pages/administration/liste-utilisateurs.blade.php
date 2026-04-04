@@ -18,10 +18,6 @@
                                 <i class="fas fa-plus mr-2"></i>
                                 Ajouter un utilisateur
                             </button>
-                            <button class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -62,9 +58,6 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <input type="checkbox" id="selectAll" class="rounded border-gray-300" onchange="toggleSelectAll()">
-                                </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utilisateur</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
@@ -76,14 +69,12 @@
                         </thead>
                         <tbody id="usersTableBody" class="bg-white divide-y divide-gray-200">
                             <!-- Exemple de lignes d'utilisateurs -->
-                            @forelse($utilisateurs as $key => $utilisateur)
+                            @forelse($listeUtilisateurs as $key => $utilisateur)
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <input type="checkbox" class="rounded border-gray-300" value="1">
-                                    </td>
+                                    
                                     <td class="px-4 py-2 whitespace-nowrap text-center text-xs font-medium text-gray-600">
-                                        {{ ($utilisateurs->currentPage() - 1) * $utilisateurs->perPage() + $key + 1 }}
+                                        {{ ($listeUtilisateurs->currentPage() - 1) * $listeUtilisateurs->perPage() + $key + 1 }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
@@ -132,21 +123,13 @@
             <!-- Pagination -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 px-6 py-4">
                 <div class="flex items-center justify-between">
-                    <div class="text-sm text-gray-700">
-                        Affichage de 1 à 10 sur 42 utilisateurs
-                    </div>
+                    <div class="text-sm text-gray-700"></div>
                     <div class="flex items-center space-x-2">
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-left"></i>
-                            Précédent
-                        </button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">1</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">2</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">3</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">Suivant</button>
-                        <button class="px-3 py-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
+                        
+                        @if($listeUtilisateurs->hasPages())
+
+                            {{ $listeUtilisateurs->links() }}
+                        @endif
                     </div>
                 </div>
             </div>
@@ -163,41 +146,62 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form method="POST" action="" class="space-y-4">
+            <form action="{{ route('enregistrer-utilisateur')}}"  method="POST" class="space-y-4">
                 @csrf
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Nom complet</label>
-                    <input type="text" name="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <input type="text" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <div>
+                        @error('name')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" name="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <div>
+                        @error('email')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
-                    <input type="password" name="password" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <input type="password" name="password" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                    <div>
+                        @error('password')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Rôle</label>
-                    <select name="role" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
-                        <option value="user">Utilisateur</option>
-                        <option value="archivist">Archiviste</option>
-                        <option value="admin">Administrateur</option>
+                    <select name="role_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
+                        <option value="">Sélectionner un rôle de l'agent</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ ucfirst($role->nom) }}</option>
+                        @endforeach
                     </select>
+                    <div>
+                        @error('role_id')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Service</label>
                     <select name="service_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-500 focus:border-transparent">
-                        <option value="">Sélectionner un service</option>
-                        <option value="1">Direction Générale</option>
-                        <option value="2">Ressources Humaines</option>
-                        <option value="3">Finances</option>
-                        <option value="4">Archivage</option>
+                        <option value="">Sélectionner un service de l'agent</option>
+                        @foreach($services as $service)
+                            <option value="{{ $service->id }}">{{ ucfirst($service->nom) }}</option>
+                        @endforeach
                     </select>
-                </div>
-                <div class="flex items-center">
-                    <input type="checkbox" name="is_active" class="w-4 h-4 text-gray-600 border-gray-300 rounded focus:ring-gray-500">
-                    <label class="ml-2 text-sm text-gray-700">Compte actif</label>
+                    <div>
+                        @error('service_id')
+                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="flex items-center justify-end space-x-4 pt-4">
                     <button type="button" onclick="hideAddUserModal()" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors">

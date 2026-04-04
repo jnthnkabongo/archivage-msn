@@ -1,5 +1,8 @@
-@extends('entete.entete')
+@extends('entete-user.entete')
 @section('content')
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Main Content Area -->
     <main class="">
@@ -17,10 +20,6 @@
                             <button onclick="showAddDocumentModal()" class="flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors transform hover:scale-105">
                                 <i class="fas fa-plus mr-2"></i>
                                 Ajouter un document
-                            </button>
-                            <button class="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
                             </button>
                         </div>
                     </div>
@@ -85,10 +84,6 @@
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Créé par</th>
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th> 
-
-                                {{-- <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th> 
-                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Taille</th>--}}
                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
@@ -101,66 +96,54 @@
                                    </td>
                                     <td class="px-4 py-2 whitespace-nowrap">   
                                         <div class="ml-3">
-                                            <div class="text-xs font-medium text-gray-900">{{ ucfirst($document->titre) }}</div>
+                                            <div class="text-xs font-medium text-gray-900">{{ \Illuminate\Support\Str::limit(ucfirst($document->titre), 40) }}</div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-2 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $document->reference }}</span>
                                     </td>
                                     <td class="px-4 py-2 whitespace-nowrap text-xs">
-                                        {{ ucfirst($document->service->nom) }}
+                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->service->nom), 10) }}
                                     </td>
                                     <td class="px-4 py-2 whitespace-nowrap text-xs">
-                                        {{ ucfirst($document->category->nom) }}
+                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->category->nom), 10) }}
                                     </td>
                                     <td class="px-4 py-2 whitespace-nowrap text-xs">
-                                        {{ ucfirst($document->type) }} -
+                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->type), 5) }} -
                                          @switch($document->type_fichier)
                                             @case('pdf')
                                                 <i class="fas fa-file-pdf text-red-500 text-lg"></i>
-                                                {{-- <span class="ml-1 px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">{{ $document->type_fichier }}</span> --}}
                                                 @break
                                             @case('doc')
                                             @case('docx')
                                                 <i class="fas fa-file-word text-blue-500 text-lg"></i>
-                                                {{-- <span class="ml-1 px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{ $document->type_fichier }}</span> --}}
                                                 @break
                                             @case('xls')
                                             @case('xlsx')
                                                 <i class="fas fa-file-excel text-green-500 text-lg"></i>
-                                                {{-- <span class="ml-1 px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">{{ $document->type_fichier }}</span> --}}
                                                 @break
                                             @case('png')
                                             @case('jpg')
                                             @case('jpeg')
                                                 <i class="fas fa-file-image text-purple-500 text-lg"></i>
-                                                {{-- <span class="ml-1 px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">{{ $document->type_fichier }}</span> --}}
                                                 @break
                                             @default
                                                 <i class="fas fa-file text-gray-500 text-lg"></i>
-                                                {{-- <span class="ml-1 px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ $document->type_fichier }}</span> --}}
                                         @endswitch
                                     </td>
                                      <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">
-                                        {{ ucfirst($document->user->name ?? 'Inconnu') }}
+                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->user->name ?? 'Inconnu'), 10) }}
                                     </td>
-                                    {{-- <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">
-                                        {{ $document->statut}}
-                                    </td> --}}
                                    <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">
-                                    {{ ucfirst($document->description) }}
+                                    {{ \Illuminate\Support\Str::limit(ucfirst($document->description), 10) }}
                                    </td>
-                                    {{-- <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">{{ $document->taille_fichier }} MB</td> --}}
                                     <td class="px-4 py-2 whitespace-nowrap text-xs">
                                         <div class="flex items-center space-x-1">
-                                            <a href="#" class="p-1.5 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-all duration-200 group" title="Télécharger">
+                                            <a href="{{ route('telecharger-document', $document->id) }}" class="p-1.5 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-all duration-200 group" title="Télécharger">
                                                 <i class="fas fa-download text-sm group-hover:scale-110 transition-transform"></i>
                                             </a>
-                                            <a href="#" class="p-1.5 text-gray-600 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 rounded-lg transition-all duration-200 group" title="Voir">
+                                            <a href="{{ route('voir-document', $document->id) }}" class="p-1.5 text-gray-600 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 rounded-lg transition-all duration-200 group" title="Voir">
                                                 <i class="fas fa-eye text-sm group-hover:scale-110 transition-transform"></i>
-                                            </a>
-                                            <a href="#" class="p-1.5 text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-lg transition-all duration-200 group" title="Supprimer">
-                                                <i class="fas fa-trash text-sm group-hover:scale-110 transition-transform"></i>
                                             </a>
                                         </div>
                                     </td>
@@ -172,82 +155,6 @@
                                     </td>
                                 </tr>
                             @endforelse
-                            {{-- <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="rounded border-gray-300" value="2">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <i class="fas fa-file-word text-blue-500 text-2xl"></i>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">Rapport_Mensuel.docx</div>
-                                            <div class="text-xs text-gray-500">ID: #002</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Word</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">1.8 MB</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Marie Curie</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">24/03/2024</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Brouillon</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center space-x-2">
-                                        <button class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                        <button class="text-gray-600 hover:text-gray-800 transition-colors">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-800 transition-colors">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="rounded border-gray-300" value="3">
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <i class="fas fa-file-excel text-green-500 text-2xl"></i>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">Budget_2024.xlsx</div>
-                                            <div class="text-xs text-gray-500">ID: #003</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Excel</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">3.2 MB</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">Pierre Martin</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">23/03/2024</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">Archivé</span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center space-x-2">
-                                        <button class="text-blue-600 hover:text-blue-800 transition-colors">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                        <button class="text-gray-600 hover:text-gray-800 transition-colors">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-800 transition-colors">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -278,7 +185,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form method="POST" action="{{ route('enregistrer.document') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('enregistrer-document-user') }}" enctype="multipart/form-data">
                 @csrf
                 @if ($errors->any())
                     <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -400,6 +307,105 @@
             document.getElementById('addDocumentModal').classList.add('hidden');
         }
 
+        // Handle form submission with SweetAlert
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[action="{{ route('enregistrer-document-user') }}"]');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Show loading SweetAlert
+                    Swal.fire({
+                        title: 'Enregistrement en cours...',
+                        html: 'Veuillez patienter pendant que nous enregistrons votre document',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
+                    // Create FormData
+                    const formData = new FormData(form);
+                    
+                    // Send AJAX request
+                    fetch('{{ route('enregistrer-document-user') }}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => {
+                                throw data;
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.success) {
+                            // Success SweetAlert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Succès!',
+                                text: data.message,
+                                showConfirmButton: true,
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#10b981'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Close modal
+                                    hideAddDocumentModal();
+                                    // Reset form
+                                    form.reset();
+                                    // Reload page to show new document
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            // Error SweetAlert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur!',
+                                text: data.message || 'Une erreur est survenue',
+                                confirmButtonColor: '#ef4444'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        
+                        // Handle validation errors
+                        if (error.errors && Array.isArray(error.errors)) {
+                            let errorMessages = error.errors.join('\n• ');
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur de validation!',
+                                html: `<div style="text-align: left;">
+                                    <p>Veuillez corriger les erreurs suivantes :</p>
+                                    <ul style="margin: 10px 0; padding-left: 20px;">
+                                        ${error.errors.map(err => `<li>${err}</li>`).join('')}
+                                    </ul>
+                                </div>`,
+                                confirmButtonColor: '#ef4444'
+                            });
+                        } else {
+                            // Generic error SweetAlert
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Erreur!',
+                                text: error.message || 'Une erreur est survenue lors de l\'enregistrement',
+                                confirmButtonColor: '#ef4444'
+                            });
+                        }
+                    });
+                });
+            }
+        });
+
         // Handle search keyup event
         function handleSearchKeyup(event) {
             if (event.key === 'Enter') {
@@ -409,7 +415,18 @@
 
         // Perform manual search
         function performSearch() {
-            filterDocuments();
+            const searchTerm = document.getElementById('searchInput').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            
+            // Construire l'URL avec les paramètres de recherche
+            const params = new URLSearchParams();
+            if (searchTerm) params.append('search', searchTerm);
+            if (typeFilter) params.append('type', typeFilter);
+            if (statusFilter) params.append('status', statusFilter);
+            
+            // Rediriger vers la route de recherche
+            window.location.href = `{{ route('rechercher-documents-user') }}?${params.toString()}`;
         }
 
         // Load sous-categories dynamically
@@ -431,34 +448,9 @@
                 .catch(error => console.error('Error loading sous-categories:', error));
         }
 
-        // Filter documents
+        // Filter documents (redirection vers la recherche serveur)
         function filterDocuments() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const typeFilter = document.getElementById('typeFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            const rows = document.querySelectorAll('#documentsTableBody tr');
-            
-            rows.forEach(row => {
-                const name = row.cells[1].textContent.toLowerCase();
-                const type = row.cells[2].textContent.trim();
-                const status = row.cells[5].textContent.trim();
-                
-                let showRow = true;
-                
-                if (searchTerm && !name.includes(searchTerm)) {
-                    showRow = false;
-                }
-                
-                if (typeFilter && type !== typeFilter) {
-                    showRow = false;
-                }
-                
-                if (statusFilter && status !== statusFilter) {
-                    showRow = false;
-                }
-                
-                row.style.display = showRow ? '' : 'none';
-            });
+            performSearch();
         }
 
         // Toggle select all

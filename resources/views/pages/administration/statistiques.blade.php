@@ -19,10 +19,6 @@
                                 <option value="month">Ce mois</option>
                                 <option value="year">Cette année</option>
                             </select>
-                            <button class="flex items-center px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                                <i class="fas fa-download mr-2"></i>
-                                Exporter
-                            </button>
                         </div>
                     </div>
                 </div>
