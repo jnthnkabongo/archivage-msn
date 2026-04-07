@@ -1,6 +1,9 @@
 @extends('entete.entete')
 @section('content')
 
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Main Content Area -->
     <main class="">
         <div class="max-w-7xl mx-auto">
@@ -22,6 +25,29 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Messages Flash -->
+            @if(session('success'))
+                <div class="fixed top-4 right-4 z-50 animate-pulse">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded-lg shadow-lg" role="alert">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-3"></i>
+                            <span>{{ session('success') }}</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="fixed top-4 right-4 z-50 animate-pulse">
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow-lg" role="alert">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle mr-3"></i>
+                            <span>{{ session('error') }}</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
 
             <!-- Search and Filter Section -->
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 mb-8">
@@ -129,7 +155,7 @@
                                         @endswitch
                                     </td>
                                      <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">
-                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->user->name ?? 'Inconnu'), 10) }}
+                                        {{ \Illuminate\Support\Str::limit(ucfirst($document->user?->name ?? 'Inconnu'), 10) }}
                                     </td>
                                    <td class="px-4 py-2 whitespace-nowrap text-xs text-gray-600">
                                     {{ \Illuminate\Support\Str::limit(ucfirst($document->description), 10) }}
@@ -142,7 +168,7 @@
                                             <a href="{{ route('voir-document', $document->id) }}" class="p-1.5 text-gray-600 bg-gray-50 hover:bg-gray-100 hover:text-gray-700 rounded-lg transition-all duration-200 group" title="Voir">
                                                 <i class="fas fa-eye text-sm group-hover:scale-110 transition-transform"></i>
                                             </a>
-                                            <a href="#" class="p-1.5 text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-lg transition-all duration-200 group" title="Supprimer">
+                                            <a href="#" onclick="supprimerDocument({{ $document->id }}, '{{ $document->titre }}')" class="p-1.5 text-red-600 bg-red-50 hover:bg-red-100 hover:text-red-700 rounded-lg transition-all duration-200 group" title="Supprimer">
                                                 <i class="fas fa-trash text-sm group-hover:scale-110 transition-transform"></i>
                                             </a>
                                         </div>
@@ -377,6 +403,67 @@
             if (search) document.getElementById('searchInput').value = search;
             if (type) document.getElementById('typeFilter').value = type;
             if (status) document.getElementById('statusFilter').value = status;
+
+            // Cacher automatiquement les messages flash après 5 secondes
+            setTimeout(() => {
+                const alerts = document.querySelectorAll('[role="alert"]');
+                alerts.forEach(alert => {
+                    alert.style.opacity = '0';
+                    alert.style.transition = 'opacity 0.5s';
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500);
+                });
+            }, 5000);
         });
+
+        // Fonction pour supprimer un document avec SweetAlert
+        function supprimerDocument(documentId, documentTitre) {
+            Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                html: `<p>Voulez-vous vraiment supprimer le document suivant ?</p><p><strong>${documentTitre}</strong></p><p>Cette action est <strong>irréversible</strong> !</p>`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Afficher le chargement
+                    Swal.fire({
+                        title: 'Suppression en cours...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // Créer un formulaire caché pour la suppression
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/documents/${documentId}`;
+                    
+                    // Ajouter le champ _method pour simuler DELETE
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'DELETE';
+                    form.appendChild(methodInput);
+                    
+                    // Ajouter le token CSRF
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+                    
+                    // Soumettre le formulaire
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
     </script>
 @endsection

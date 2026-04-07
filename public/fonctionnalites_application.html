@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fonctionnalités du Système d'Archivage</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+            @top-center {
+                content: "Système d'Archivage - Fonctionnalités";
+                font-size: 10px;
+                color: #666;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " sur " counter(pages);
+                font-size: 10px;
+                color: #666;
+            }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+            font-size: 12px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            page-break-after: always;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header h2 {
+            color: #34495e;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        
+        .toc {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            page-break-after: always;
+        }
+        
+        .toc h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 8px;
+        }
+        
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 22px;
+            page-break-after: avoid;
+        }
+        
+        .section h3 {
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            page-break-after: avoid;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .feature-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .feature-description {
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .feature-benefits {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .feature-benefits li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .feature-benefits li:before {
+            content: "✓ ";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            font-size: 11px;
+        }
+        
+        table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #2c3e50;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 10px;
+            page-break-before: always;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 5px;
+        }
+        
+        p {
+            margin-bottom: 10px;
+        }
+        
+        strong {
+            color: #2c3e50;
+        }
+        
+        code {
+            background: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .tech-stack {
+            background: #f0f8ff;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .no-print {
+            display: none;
+        }
+        
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="text-align: center; margin: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
+        <h3>Instructions pour générer le PDF</h3>
+        <p><strong>Utilisez la fonction d'impression de votre navigateur :</strong></p>
+        <ol style="text-align: left; display: inline-block;">
+            <li>Appuyez sur <strong>Ctrl+P</strong> (Windows) ou <strong>Cmd+P</strong> (Mac)</li>
+            <li>Dans les paramètres d'impression, choisissez <strong>"Enregistrer au format PDF"</strong></li>
+            <li>Assurez-vous que l'option <strong>"Mise en page"</strong> est réglée sur <strong>"A4"</strong></li>
+            <li>Cliquez sur <strong>"Enregistrer"</strong></li>
+        </ol>
+        <p><em>Cette page ne sera pas incluse dans le PDF final.</em></p>
+    </div>
+
+    <div class="header">
+        <h1>Fonctionnalités du Système d'Archivage</h1>
+        <h2>Application Web de Gestion Documentaire</h2>
+        <p>Version 1.0 - Mars 2026</p>
+        <p>Ministère de la Santé Publique</p>
+    </div>
+
+    <div class="toc">
+        <h2>Table des Matières</h2>
+        <ul>
+            <li><a href="#introduction">1. Introduction</a></li>
+            <li><a href="#architecture">2. Architecture Technique</a></li>
+            <li><a href="#gestion-documents">3. Gestion des Documents</a></li>
+            <li><a href="#recherche">4. Recherche et Filtres</a></li>
+            <li><a href="#organisation">5. Organisation et Classification</a></li>
+            <li><a href="#utilisateurs">6. Gestion des Utilisateurs</a></li>
+            <li><a href="#securite">7. Sécurité et Permissions</a></li>
+            <li><a href="#archivage">8. Archivage et Conservation</a></li>
+            <li><a href="#interface">9. Interface Utilisateur</a></li>
+            <li><a href="#technologies">10. Technologies Utilisées</a></li>
+            <li><a href="#avantages">11. Avantages et Bénéfices</a></li>
+        </ul>
+    </div>
+
+    <div class="section" id="introduction">
+        <h2>1. Introduction</h2>
+        
+        <h3>1.1 Vue d'Ensemble</h3>
+        <p>Le système d'archivage numérique est une application web complète développée pour le Ministère de la Santé Publique afin de centraliser, organiser et sécuriser la gestion des documents administratifs et opérationnels.</p>
+        
+        <h3>1.2 Objectifs Principaux</h3>
+        <ul>
+            <li><strong>Centralisation</strong> : Rassembler tous les documents dans une plateforme unique</li>
+            <li><strong>Sécurisation</strong> : Protéger les informations sensibles avec des niveaux d'accès</li>
+            <li><strong>Traçabilité</strong> : Suivre l'historique des actions sur chaque document</li>
+            <li><strong>Efficacité</strong> : Faciliter la recherche et l'accès rapide aux documents</li>
+            <li><strong>Conformité</strong> : Respecter les normes de conservation documentaire</li>
+        </ul>
+        
+        <h3>1.3 Public Cible</h3>
+        <div class="feature-card">
+            <div class="feature-title">Utilisateurs du Système</div>
+            <div class="feature-description">L'application s'adresse à différents types d'utilisateurs au sein de l'organisation :</div>
+            <ul class="feature-benefits">
+                <li>Administrateurs système</li>
+                <li>Gestionnaires de documents</li>
+                <li>Personnel administratif</li>
+                <li>Agents des différents services</li>
+                <li>Auditeurs et contrôleurs</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="architecture">
+        <h2>2. Architecture Technique</h2>
+        
+        <h3>2.1 Architecture Web Moderne</h3>
+        <p>L'application repose sur une architecture web robuste et scalable :</p>
+        
+        <div class="tech-stack">
+            <h4>Stack Technique</h4>
+            <ul>
+                <li><strong>Backend</strong> : Framework Laravel (PHP)</li>
+                <li><strong>Frontend</strong> : HTML5, CSS3, JavaScript moderne</li>
+                <li><strong>Base de données</strong> : MySQL/MariaDB</li>
+                <li><strong>Interface</strong> : Responsive Design avec TailwindCSS</li>
+                <li><strong>Sécurité</strong> : Authentification, permissions granulaires</li>
+            </ul>
+        </div>
+        
+        <h3>2.2 Caractéristiques Techniques</h3>
+        <div class="feature-card">
+            <div class="feature-title">Performance et Scalabilité</div>
+            <ul class="feature-benefits">
+                <li>Architecture MVC pour une maintenance aisée</li>
+                <li>Base de données optimisée avec indexation</li>
+                <li>Système de cache pour les requêtes fréquentes</li>
+                <li>Upload de fichiers avec gestion des tailles</li>
+                <li>Support des formats standards (PDF, Office, Images)</li>
+                <li>Interface responsive pour tous les appareils</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="gestion-documents">
+        <h2>3. Gestion des Documents</h2>
+        
+        <h3>3.1 Upload et Stockage</h3>
+        <div class="feature-card">
+            <div class="feature-title">Fonctionnalités d'Upload</div>
+            <div class="feature-description">Le système permet d'ajouter des documents de manière simple et sécurisée :</div>
+            <ul class="feature-benefits">
+                <li>Upload par glisser-déposer ou sélection de fichier</li>
+                <li>Validation automatique des formats (PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG)</li>
+                <li>Limite de taille configurable (5MB par défaut)</li>
+                <li>Génération automatique de référence unique</li>
+                <li>Métadonnées enrichies (titre, description, catégorie, service)</li>
+                <li>Niveaux de confidentialité configurables</li>
+            </ul>
+        </div>
+        
+        <h3>3.2 Consultation et Téléchargement</h3>
+        <div class="feature-card">
+            <div class="feature-title">Accès aux Documents</div>
+            <ul class="feature-benefits">
+                <li>Visualisation directe dans le navigateur (PDF, images)</li>
+                <li>Téléchargement sécurisé des fichiers originaux</li>
+                <li>Affichage des métadonnées complètes</li>
+                <li>Historique des consultations et téléchargements</li>
+                <li>Contrôle d'accès basé sur les permissions</li>
+            </ul>
+        </div>
+        
+        <h3>3.3 Référencement Automatique</h3>
+        <div class="info-box">
+            <p><strong>Système de Référence Unique</strong></p>
+            <p>Chaque document reçoit automatiquement une référence au format : <code>DOC-MNS-AAAA-XXXXXX</code></p>
+            <ul>
+                <li><strong>DOC</strong> : Type de document</li>
+                <li><strong>MNS</strong> : Ministère de la Santé</li>
+                <li><strong>AAAA</strong> : Année de création</li>
+                <li><strong>XXXXXX</strong> : Code aléatoire unique</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="recherche">
+        <h2>4. Recherche et Filtres</h2>
+        
+        <h3>4.1 Moteur de Recherche Avancé</h3>
+        <div class="feature-card">
+            <div class="feature-title">Capacités de Recherche</div>
+            <div class="feature-description">Le système dispose d'un moteur de recherche puissant et flexible :</div>
+            <ul class="feature-benefits">
+                <li>Recherche plein texte dans tous les champs</li>
+                <li>Recherche par titre, référence, description</li>
+                <li>Recherche dans les relations (catégorie, service, auteur)</li>
+                <li>Suggestion automatique de résultats</li>
+                <li>Recherche par date et période</li>
+                <li>Support des expressions régulières</li>
+            </ul>
+        </div>
+        
+        <h3>4.2 Filtres Multi-Critères</h3>
+        <div class="feature-card">
+            <div class="feature-title">Options de Filtrage</div>
+            <ul class="feature-benefits">
+                <li>Filtre par type de fichier (PDF, Word, Excel, Image)</li>
+                <li>Filtre par statut (Brouillon, Validé, Archivé)</li>
+                <li>Filtre par niveau de confidentialité</li>
+                <li>Filtre par service ou département</li>
+                <li>Filtre par catégorie et sous-catégorie</li>
+                <li>Filtre par période de création</li>
+                <li>Combinaison multiple de filtres</li>
+            </ul>
+        </div>
+        
+        <h3>4.3 Performance de Recherche</h3>
+        <div class="success-box">
+            <p><strong>Optimisations Techniques</strong></p>
+            <ul>
+                <li>Indexation des champs fréquemment recherchés</li>
+                <li>Recherche côté serveur pour gérer de grands volumes</li>
+                <li>Pagination préservant les filtres</li>
+                <li>Cache des résultats de recherche fréquents</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="organisation">
+        <h2>5. Organisation et Classification</h2>
+        
+        <h3>5.1 Système de Catégorisation</h3>
+        <div class="feature-card">
+            <div class="feature-title">Structure Hiérarchique</div>
+            <div class="feature-description">Les documents sont organisés selon une structure à deux niveaux :</div>
+            <ul class="feature-benefits">
+                <li>Catégories principales (ex: Administratif, Médical, Financier)</li>
+                <li>Sous-catégories spécifiques (ex: Contrats, Rapports, Factures)</li>
+                <li>Classification flexible et évolutive</li>
+                <li>Gestion des catégories par les administrateurs</li>
+                <li>Assignation multiple de catégories possible</li>
+            </ul>
+        </div>
+        
+        <h3>5.2 Gestion des Services</h3>
+        <div class="feature-card">
+            <div class="feature-title">Organisation par Services</div>
+            <ul class="feature-benefits">
+                <li>Création et gestion des départements/services</li>
+                <li>Association des utilisateurs aux services</li>
+                <li>Assignation des documents aux services concernés</li>
+                <li>Gestion des responsables de service</li>
+                <li>Statut actif/inactif des services</li>
+            </ul>
+        </div>
+        
+        <h3>5.3 Étiquetage et Métadonnées</h3>
+        <div class="info-box">
+            <p><strong>Métadonnées Riches</strong></p>
+            <p>Chaque document peut être enrichi avec des métadonnées détaillées :</p>
+            <ul>
+                <li>Titre et description détaillée</li>
+                <li>Mots-clés et étiquettes</li>
+                <li>Date de création et date du document</li>
+                <li>Type de document (entrant, sortant, interne)</li>
+                <li>Niveau de confidentialité</li>
+                <li>Informations sur l'auteur et le service</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="utilisateurs">
+        <h2>6. Gestion des Utilisateurs</h2>
+        
+        <h3>6.1 Système de Gestion des Comptes</h3>
+        <div class="feature-card">
+            <div class="feature-title">Administration des Utilisateurs</div>
+            <ul class="feature-benefits">
+                <li>Création et suppression de comptes utilisateurs</li>
+                <li>Gestion des profils et informations personnelles</li>
+                <li>Assignation des rôles et permissions</li>
+                <li>Association aux services et départements</li>
+                <li>Activation/désactivation des comptes</li>
+                <li>Réinitialisation des mots de passe</li>
+            </ul>
+        </div>
+        
+        <h3>6.2 Rôles et Permissions</h3>
+        <table>
+            <tr>
+                <th>Rôle</th>
+                <th>Permissions Principales</th>
+                <th>Accès</th>
+            </tr>
+            <tr>
+                <td>Administrateur</td>
+                <td>Gestion complète du système, utilisateurs, paramètres</td>
+                <td>Toutes les fonctionnalités</td>
+            </tr>
+            <tr>
+                <td>Gestionnaire</td>
+                <td>Gestion des documents, catégories, services</td>
+                <td>Administration partielle</td>
+            </tr>
+            <tr>
+                <td>Utilisateur</td>
+                <td>Lecture, ajout de documents limités</td>
+                <td>Fonctions de base</td>
+            </tr>
+        </table>
+        
+        <h3>6.3 Sécurité des Comptes</h3>
+        <div class="warning-box">
+            <p><strong>Mesures de Sécurité</strong></p>
+            <ul>
+                <li>Mots de passe hashés avec algorithmes sécurisés</li>
+                <li>Authentification par session sécurisée</li>
+                <li>Journalisation des connexions et déconnexions</li>
+                <li>Blocage automatique après tentatives échouées</li>
+                <li>Expiration des sessions inactives</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="securite">
+        <h2>7. Sécurité et Permissions</h2>
+        
+        <h3>7.1 Niveaux de Confidentialité</h3>
+        <table>
+            <tr>
+                <th>Niveau</th>
+                <th>Description</th>
+                <th>Accès Autorisé</th>
+            </tr>
+            <tr>
+                <td>Public</td>
+                <td>Documents accessibles à tous</td>
+                <td>Tous les utilisateurs authentifiés</td>
+            </tr>
+            <tr>
+                <td>Interne</td>
+                <td>Documents internes à l'organisation</td>
+                <td>Personnel autorisé</td>
+            </tr>
+            <tr>
+                <td>Confidentiel</td>
+                <td>Informations sensibles</td>
+                <td>Personnel spécifique autorisé</td>
+            </tr>
+            <tr>
+                <td>Secret</td>
+                <td>Informations très sensibles</td>
+                <td>Administrateurs uniquement</td>
+            </tr>
+        </table>
+        
+        <h3>7.2 Contrôle d'Accès Granulaire</h3>
+        <div class="feature-card">
+            <div class="feature-title">Permissions Détaillées</div>
+            <ul class="feature-benefits">
+                <li>Contrôle d'accès par rôle et par utilisateur</li>
+                <li>Permissions spécifiques par fonctionnalité</li>
+                <li>Héritage des permissions de service</li>
+                <li>Restrictions par niveau de confidentialité</li>
+                <li>Audit des accès et tentatives d'accès</li>
+                <li>Gestion des droits sur les documents spécifiques</li>
+            </ul>
+        </div>
+        
+        <h3>7.3 Traçabilité et Audit</h3>
+        <div class="success-box">
+            <p><strong>Journalisation Complète</strong></p>
+            <p>Toutes les actions importantes sont enregistrées pour assurer la traçabilité :</p>
+            <ul>
+                <li>Connexions et déconnexions des utilisateurs</li>
+                <li>Création, modification, suppression de documents</li>
+                <li>Téléchargements et consultations</li>
+                <li>Changements de permissions et rôles</li>
+                <li>Actions d'archivage et restauration</li>
+                <li>Timestamp précis pour chaque action</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="archivage">
+        <h2>8. Archivage et Conservation</h2>
+        
+        <h3>8.1 Processus d'Archivage</h3>
+        <div class="feature-card">
+            <div class="feature-title">Archivage Automatique et Manuel</div>
+            <ul class="feature-benefits">
+                <li>Archivage automatique selon des règles prédéfinies</li>
+                <li>Archivage manuel par les utilisateurs autorisés</li>
+                <li>Conservation des métadonnées et historique</li>
+                <li>Stockage sécurisé des documents archivés</li>
+                <li>Politiques de rétention configurables</li>
+                <li>Processus de validation avant archivage</li>
+            </ul>
+        </div>
+        
+        <h3>8.2 Gestion des Archives</h3>
+        <div class="feature-card">
+            <div class="feature-title">Fonctionnalités d'Archivage</div>
+            <ul class="feature-benefits">
+                <li>Consultation des documents archivés</li>
+                <li>Recherche dans les archives</li>
+                <li>Extraction et restauration si nécessaire</li>
+                <li>Export des listes d'archives</li>
+                <li>Rapports d'archivage périodiques</li>
+                <li>Gestion des cycles de vie des documents</li>
+            </ul>
+        </div>
+        
+        <h3>8.3 Conformité Réglementaire</h3>
+        <div class="info-box">
+            <p><strong>Normes de Conservation</strong></p>
+            <p>Le système respecte les exigences réglementaires en matière de conservation documentaire :</p>
+            <ul>
+                <li>Périodes de rétention par type de document</li>
+                <li>Règles d'archivage automatique</li>
+                <li>Processus d'élimination sécurisée</li>
+                <li>Génération de rapports de conformité</li>
+                <li>Preuve d'intégrité des documents</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="interface">
+        <h2>9. Interface Utilisateur</h2>
+        
+        <h3>9.1 Design Moderne et Intuitif</h3>
+        <div class="feature-card">
+            <div class="feature-title">Caractéristiques de l'Interface</div>
+            <ul class="feature-benefits">
+                <li>Design épuré et professionnel</li>
+                <li>Interface responsive pour tous les appareils</li>
+                <li>Navigation intuitive et logique</li>
+                <li>Feedback visuel pour toutes les actions</li>
+                <li>Alertes et notifications informatives</li>
+                <li>Aide contextuelle et tooltips</li>
+            </ul>
+        </div>
+        
+        <h3>9.2 Tableau de Bord</h3>
+        <div class="feature-card">
+            <div class="feature-title">Vue d'Ensemble du Système</div>
+            <ul class="feature-benefits">
+                <li>Statistiques en temps réel (documents, utilisateurs, services)</li>
+                <li>Graphiques et indicateurs de performance</li>
+                <li>Activité récente et actions importantes</li>
+                <li>Raccourcis vers les fonctionnalités principales</li>
+                <li>Personnalisation du dashboard par rôle</li>
+                <li>Export des rapports et statistiques</li>
+            </ul>
+        </div>
+        
+        <h3>9.3 Expérience Utilisateur</h3>
+        <div class="success-box">
+            <p><strong>Optimisations UX</strong></p>
+            <ul>
+                <li>Chargement rapide des pages</li>
+                <li>Feedback immédiat sur les actions</li>
+                <li>Gestion d'erreur conviviale</li>
+                <li>Confirmation pour les actions critiques</li>
+                <li>Mode sombre/clair (optionnel)</li>
+                <li>Accessibilité WCAG 2.1</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="technologies">
+        <h2>10. Technologies Utilisées</h2>
+        
+        <h3>10.1 Stack Technique Complet</h3>
+        <div class="tech-stack">
+            <h4>Backend - Laravel Framework</h4>
+            <ul>
+                <li>PHP 8.x avec toutes les fonctionnalités modernes</li>
+                <li>Architecture MVC pour une organisation claire</li>
+                <li>Eloquent ORM pour la gestion de base de données</li>
+                <li>Système de routing puissant et flexible</li>
+                <li>Middleware pour la sécurité et authentification</li>
+                <li>Validation des données intégrée</li>
+            </ul>
+        </div>
+        
+        <div class="tech-stack">
+            <h4>Frontend - Technologies Modernes</h4>
+            <ul>
+                <li>HTML5 sémantique et accessible</li>
+                <li>CSS3 avec TailwindCSS pour le design</li>
+                <li>JavaScript vanilla (pas de dépendances lourdes)</li>
+                <li>AJAX pour les interactions dynamiques</li>
+                <li>SweetAlert2 pour les notifications élégantes</li>
+                <li>Font Awesome pour les icônes</li>
+            </ul>
+        </div>
+        
+        <h3>10.2 Base de Données</h3>
+        <div class="feature-card">
+            <div class="feature-title">Conception Optimisée</div>
+            <ul class="feature-benefits">
+                <li>MySQL/MariaDB avec moteur InnoDB</li>
+                <li>Relations bien définies entre les entités</li>
+                <li>Indexation optimisée pour les performances</li>
+                <li>Migrations versionnées pour l'évolution</li>
+                <li>Seeders pour les données de test</li>
+                <li>Backup automatique régulier</li>
+            </ul>
+        </div>
+        
+        <h3>10.3 Sécurité et Performance</h3>
+        <div class="feature-card">
+            <div class="feature-title">Optimisations Techniques</div>
+            <ul class="feature-benefits">
+                <li>Protection CSRF intégrée</li>
+                <li>Échappement automatique des entrées</li>
+                <li>Hashage sécurisé des mots de passe</li>
+                <li>Cache Redis pour les performances</li>
+                <li>Compression des ressources statiques</li>
+                <li>HTTPS obligatoire en production</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="avantages">
+        <h2>11. Avantages et Bénéfices</h2>
+        
+        <h3>11.1 Bénéfices Opérationnels</h3>
+        <div class="feature-card">
+            <div class="feature-title">Amélioration de l'Efficacité</div>
+            <ul class="feature-benefits">
+                <li>Réduction du temps de recherche de documents (80% plus rapide)</li>
+                <li>Centralisation évitant les pertes de documents</li>
+                <li>Automatisation des tâches administratives</li>
+                <li>Accessibilité 24/7 aux documents autorisés</li>
+                <li>Réduction des coûts d'impression et de stockage</li>
+                <li>Amélioration de la collaboration entre services</li>
+            </ul>
+        </div>
+        
+        <h3>11.2 Bénéfices de Sécurité</h3>
+        <div class="feature-card">
+            <div class="feature-title">Protection des Informations</div>
+            <ul class="feature-benefits">
+                <li>Contrôle d'accès strict et personnalisé</li>
+                <li>Traçabilité complète de toutes les actions</li>
+                <li>Protection contre la perte de données</li>
+                <li>Conformité avec les normes de sécurité</li>
+                <li>Sauvegarde automatique et récupération</li>
+                <li>Gestion des niveaux de confidentialité</li>
+            </ul>
+        </div>
+        
+        <h3>11.3 Bénéfices Financiers</h3>
+        <div class="success-box">
+            <p><strong>Retour sur Investissement</strong></p>
+            <ul>
+                <li>Réduction des coûts de stockage physique</li>
+                <li>Diminution des frais d'impression et de photocopies</li>
+                <li>Optimisation du temps du personnel</li>
+                <li>Réduction des risques de non-conformité</li>
+                <li>Amélioration de la prise de décision</li>
+                <li>Scalabilité sans coût additionnel majeur</li>
+            </ul>
+        </div>
+        
+        <h3>11.4 Avantages Concurrentiels</h3>
+        <div class="info-box">
+            <p><strong>Différenciation</strong></p>
+            <p>Notre système se distingue par :</p>
+            <ul>
+                <li><strong>Simplicité d'utilisation</strong> : Interface intuitive nécessitant peu de formation</li>
+                <li><strong>Flexibilité</strong> : Adaptable aux besoins spécifiques de l'organisation</li>
+                <li><strong>Performance</strong> : Rapide même avec de grands volumes de documents</li>
+                <li><strong>Support local</strong> : Assistance technique disponible et réactive</li>
+                <li><strong>Évolutivité</strong> : Architecture permettant une croissance facile</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Système d'Archivage Numérique - Fonctionnalités</strong></p>
+        <p>Ministère de la Santé Publique - République Démocratique du Congo</p>
+        <p>Version 1.0 - Mars 2026</p>
+        <p>Document confidentiel - Usage interne uniquement</p>
+    </div>
+</body>
+</html>

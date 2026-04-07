@@ -149,6 +149,33 @@ class indexController extends Controller
         return view('pages.administration.view-document', compact('document'));
     }
 
+    public function supprimer_document(Document $document){
+        try {
+            // Vérifier si le document a un fichier associé
+            if ($document->fichier) {
+                $filePath = storage_path('app/public/documents/' . $document->fichier);
+                
+                // Supprimer le fichier physique s'il existe
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+            
+            // Supprimer les enregistrements associés (versions, archives, partages)
+            $document->versions()->delete();
+            $document->archive()->delete();
+            $document->partages()->delete();
+            
+            // Supprimer le document de la base de données
+            $document->delete();
+            
+            return redirect()->route('liste-documents')->with('success', 'Document supprimé avec succès');
+            
+        } catch (\Exception $e) {
+            return redirect()->route('liste-documents')->with('error', 'Erreur lors de la suppression du document: ' . $e->getMessage());
+        }
+    }
+
     public function create_category(Request $request){
         //1. Validation
         $request->validate([
